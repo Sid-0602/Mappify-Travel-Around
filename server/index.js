@@ -1,10 +1,22 @@
 const express = require("express");
 const mongoose  = require("mongoose");
 const dotenv = require("dotenv");
+const pinRoute = require("./routes/pins");
 
 const app = express();
 dotenv.config();
 
+app.use(express.json());
+
+/* Routes */
+
+app.use("/api/pins/",pinRoute);
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+});
+
+/* MONGO DB Connectivity */
 const port = process.env.PORT || 5000;
 
 mongoose
