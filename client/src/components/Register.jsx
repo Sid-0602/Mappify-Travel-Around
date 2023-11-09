@@ -25,7 +25,9 @@ export default function Register({setShowRegister}) {
             await axios.post("/users/register",newUser);
             setError(false);
             setSuccess(true);
+            alert("Registered Successfully!")
         }catch(err){
+            alert("Something went Wrong!");
             setError(true);
         }
     }

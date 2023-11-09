@@ -11,7 +11,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 const TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const myStorage = window.localStorage;
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -45,6 +46,11 @@ function App() {
   };
 
   const handleAddClick = (e) => {
+
+    if(!currentUser){
+      alert("You must login to add Pins and Share Experience!");
+      return;
+    }
     const lat = e.lngLat.lat;
     const long = e.lngLat.lng;
 
@@ -72,12 +78,17 @@ function App() {
       const res = await axios.post('/pins', newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
-      console.log(pins);
     } catch (err) {
+      alert("Something went wrong!");
       console.log(err);
     }
   };
 
+  const handlelogout = ()=>{
+    myStorage.removeItem("user");
+    setCurrentUser(null);
+    alert("Logged Out Successfully!!");
+  }
   return (
     <div>
       <ReactMapGL
@@ -182,7 +193,7 @@ function App() {
         )}
 
         {currentUser ? (
-          <button className="button logout">Log Out</button>
+          <button className="button logout" onClick={handlelogout}>Log Out</button>
         ) : (
           <div className="buttons">
             <button
@@ -200,7 +211,7 @@ function App() {
           </div>
         )}
         {showRegister && <Register setShowRegister={setShowRegister} />}
-        {showLogin && <Login setShowLogin={setShowLogin} />}
+        {showLogin && <Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} myStorage={myStorage} />}
       </ReactMapGL>
     </div>
   );

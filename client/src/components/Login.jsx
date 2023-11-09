@@ -4,7 +4,7 @@ import "./login.css"
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-export default function Login({setShowLogin}) {
+export default function Login({setShowLogin,setCurrentUser,myStorage}) {
     const[error, setError] = useState(false);
     const nameRef = useRef();
     const passwordRef = useRef();
@@ -19,9 +19,15 @@ export default function Login({setShowLogin}) {
         };
 
         try{
-            await axios.post("/users/login",User);
+            const res = await axios.post("/users/login",User);
+            myStorage.setItem("user",res.data.username);
+            setCurrentUser(res.data.username);
+            setShowLogin(false);
             setError(false);
+            alert("Logged in Successfully!!")
         }catch(err){
+            alert("Something went Wrong!")
+            console.log(err);
             setError(true);
         }
     }
