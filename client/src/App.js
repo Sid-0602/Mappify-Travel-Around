@@ -63,6 +63,7 @@ function App() {
     setRating(0);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPin = {
@@ -134,11 +135,9 @@ function App() {
                   <p className="desc">{p.desc}</p>
                   <label>Rating</label>
                   <div className="stars">
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarRateIcon />
-                    <StarRateIcon />
+                    {Array.from({ length: Math.floor(p.rating) }, (_, index) => (
+                      <StarRateIcon key={index} />
+                    ))}
                   </div>
                   <label>Info</label>
                   <span className="username">
