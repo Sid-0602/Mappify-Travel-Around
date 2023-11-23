@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5000;
 
 app.get('/',(req,res)=>{
-    res.json("Welcome to Mappify Server!");
+    res.send("Welcome to Mappify Server!");
 })
 
 mongoose
