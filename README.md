@@ -17,14 +17,16 @@ Visit the website and directly view the alredy created pins on Map. If you want 
 
 ### Docker and Docker Compose
 
+Pull Docker image: 
+
+`docker pull sidjadhav/mappify-server:1.0.0.RELEASE`
+
 #### Docker Compose deployment:
 
 ```
 docker-compose up # to start
 docker-compose down # to end
 ```
-
-
 
 #### Pushing new image:
 
