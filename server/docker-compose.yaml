@@ -1,10 +1,30 @@
 version: '3'
 services:
-  Mappify-server: 
-    image: sidjadhav/mappify-server:0.0.1.RELEASE
+  server: 
+    image: sidjadhav/mappify-server:1.0.0.RELEASE
+    restart: always
     ports:
       - "3000:3000"
+    depends_on: 
+      - mongo
     env_file:
       -  .env
+    environment:
+      MONGO_URL: mongodb://root:password@mongo:27017
+    deploy:
+      resources:
+        limits:
+          memory: 5gb
+  mongo: 
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
 
-
+volumes:
+  mongo-data:
