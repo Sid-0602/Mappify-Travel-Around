@@ -1,8 +1,8 @@
 FROM node:slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . /usr/src/app/
+COPY . /app
 COPY package*.json ./
 
 RUN npm install
